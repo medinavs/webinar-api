@@ -270,7 +270,7 @@ export class PrismaWebinarRepository implements WebinarRepository {
             },
             orderBy: {
                 webinar: {
-                    date: 'asc'
+                    date: 'desc'
                 }
             }
         });
