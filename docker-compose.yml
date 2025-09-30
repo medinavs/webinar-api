@@ -1,34 +1,34 @@
 services:
-  # postgres:
-  #   image: postgres:15-alpine
-  #   container_name: tractian-webinar-db
-  #   restart: unless-stopped
-  #   environment:
-  #     POSTGRES_DB: tractian_webinar
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_PASSWORD: postgres
-  #   ports:
-  #     - "5432:5432"
-  #   # volumes:
-  #   #   - postgres_data:/var/lib/postgresql/data
-  #   networks:
-  #     - tractian-webinar-network
-
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: tractian-webinar-api
+  postgres:
+    image: postgres:15-alpine
+    container_name: tractian-webinar-db
     restart: unless-stopped
-    ports:
-      - "8080:8080"
     environment:
-      - NODE_ENV=production
-      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/tractian_webinar
-    depends_on:
-      - postgres
+      POSTGRES_DB: tractian_webinar
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    # volumes:
+    #   - postgres_data:/var/lib/postgresql/data
     networks:
       - tractian-webinar-network
+
+  # app:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: tractian-webinar-api
+  #   restart: unless-stopped
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     - NODE_ENV=production
+  #     - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/tractian_webinar
+  #   depends_on:
+  #     - postgres
+  #   networks:
+  #     - tractian-webinar-network
 
 volumes:
   postgres_data:
