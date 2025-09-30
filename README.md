@@ -21,16 +21,19 @@ npm install
 - Configure the `.env` file with the `DATABASE_URL` variable for PostgreSQL.
 
 - To run the database using Docker:
+
   ```sh
   docker-compose up
   ```
 
 - Run Prisma migrations:
+
   ```sh
   npm run prisma:migrate
   ```
 
 - Create entities from the Prisma schema:
+
   ```sh
   npm run prisma:push
   ```
@@ -105,6 +108,8 @@ The API uses decorator-based routing with controllers for each domain. Main endp
 
 - **Webinars**
   - `GET /webinars`: List webinars (with filters)
+  - `GET /webinars/populars`: List of most popular webinars
+  - `GET /webinars/recents`: List of recents webinars
   - `GET /webinars/:id`: Get webinar details
   - `GET /webinars/registered/:userId`: List webinars a user is registered for
   - `POST /webinars/:webinarId/registrations`: Register authenticated user for a webinar

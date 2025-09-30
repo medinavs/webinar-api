@@ -8,6 +8,8 @@ import { MakeCreateRegistration } from "../../use-cases/factories/make-create-re
 import { HasUserAlreadyRegisteredError, UserRegistrationError } from "@/shared/exceptions/user";
 import { WebinarNotFoundError } from "@/shared/exceptions/webinar";
 import { registerWebinarBodySchema, registerWebinarParamsSchema } from "../schema";
+import { MakeFetchPopularsWebinars } from "../../use-cases/factories/make-fetch-populars-webinars";
+import { MakeFetchRecentsWebinars } from "../../use-cases/factories/make-fetch-recents-webinars";
 
 export class WebinarController {
     constructor() { }
@@ -36,6 +38,32 @@ export class WebinarController {
                 }
             });
 
+
+            reply.status(200).send({ webinars });
+        } catch (error) {
+            if (error instanceof Error)
+                reply.status(500).send({ error: error.message || 'Internal server error' });
+        }
+    }
+
+    @Route('GET', '/webinars/populars')
+    async getPopularWebinars(request: FastifyRequest, reply: FastifyReply): Promise<void> {
+        try {
+            const useCase = MakeFetchPopularsWebinars();
+            const webinars = await useCase.execute();
+
+            reply.status(200).send({ webinars });
+        } catch (error) {
+            if (error instanceof Error)
+                reply.status(500).send({ error: error.message || 'Internal server error' });
+        }
+    }
+
+    @Route('GET', '/webinars/recents')
+    async getRecentsWebinars(request: FastifyRequest, reply: FastifyReply): Promise<void> {
+        try {
+            const useCase = MakeFetchRecentsWebinars();
+            const webinars = await useCase.execute();
 
             reply.status(200).send({ webinars });
         } catch (error) {

@@ -9,6 +9,10 @@ export interface WebinarRepository {
         speakerId?: string;
     }): Promise<Webinar[]>;
 
+    findRecentsWebinars(): Promise<Webinar[]>;
+
+    findPopulars(): Promise<Webinar[]>;
+
     findById(id: string): Promise<Webinar | null>;
 
     create(data: CreateWebinarData): Promise<Webinar>;

@@ -62,6 +62,90 @@ export class PrismaWebinarRepository implements WebinarRepository {
         return webinars;
     }
 
+    async findPopulars(): Promise<Webinar[]> {
+        const webinars = await prisma.webinar.findMany({
+            where: {
+                date: {
+                    gte: new Date()
+                }
+            },
+            include: {
+                speaker: {
+                    select: {
+                        id: true,
+                        name: true,
+                        image: true
+                    }
+                },
+                registrations: {
+                    include: {
+                        user: {
+                            select: {
+                                id: true,
+                                name: true,
+                                image: true
+                            }
+                        }
+                    }
+                },
+                _count: {
+                    select: {
+                        registrations: true
+                    }
+                }
+            },
+            orderBy: {
+                registrations: {
+                    _count: 'desc'
+                }
+            },
+            take: 3
+        });
+
+        return webinars;
+    }
+
+    async findRecentsWebinars(): Promise<Webinar[]> {
+        const webinars = await prisma.webinar.findMany({
+            where: {
+                date: {
+                    gte: new Date()
+                }
+            },
+            include: {
+                speaker: {
+                    select: {
+                        id: true,
+                        name: true,
+                        image: true
+                    }
+                },
+                registrations: {
+                    include: {
+                        user: {
+                            select: {
+                                id: true,
+                                name: true,
+                                image: true
+                            }
+                        }
+                    }
+                },
+                _count: {
+                    select: {
+                        registrations: true
+                    }
+                }
+            },
+            orderBy: {
+                date: 'asc'
+            },
+            take: 10
+        });
+
+        return webinars;
+    }
+
     async findById(id: string): Promise<Webinar | null> {
         const webinar = await prisma.webinar.findUnique({
             where: { id },
