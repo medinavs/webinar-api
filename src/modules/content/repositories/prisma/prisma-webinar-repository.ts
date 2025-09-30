@@ -36,6 +36,8 @@ export class PrismaWebinarRepository implements WebinarRepository {
             ];
         }
 
+        where.date = { ...where.date, gte: new Date() };
+
         const webinars = await prisma.webinar.findMany({
             where,
             include: {
