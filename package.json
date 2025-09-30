@@ -11,7 +11,8 @@
     "docker:dev": "docker-compose up",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "npx prisma studio",
-    "prisma:push": "prisma db push"
+    "prisma:push": "prisma db push",
+    "db:populate": "tsx src/scripts/db-populate.ts"
   },
   "dependencies": {
     "@fastify/cookie": "^11.0.2",

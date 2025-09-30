@@ -19,17 +19,25 @@ npm install
 ### Database Setup
 
 - Configure the `.env` file with the `DATABASE_URL` variable for PostgreSQL.
+
 - To run the database using Docker:
   ```sh
   docker-compose up
   ```
+
 - Run Prisma migrations:
   ```sh
   npm run prisma:migrate
   ```
+
 - Create entities from the Prisma schema:
   ```sh
   npm run prisma:push
+  ```
+
+- Populate Database:
+  ```sh
+  npm run db:populate
   ```
 
 ### Generate Prisma Client
@@ -105,12 +113,11 @@ The API uses decorator-based routing with controllers for each domain. Main endp
   - `GET /categories`: List all categories
 
 - **Auth**
-  - "*" all auth endpoints from BetterAuth (admin plugin too)
+  - "\*" all auth endpoints from BetterAuth (admin plugin too)
   - `POST /api/auth/sign-up`: Create user account
   - `POST /api/auth/sign-in`: Login
   - `POST /api/auth/sign-out`: Logout
   - `GET /api/auth/session`: Get current session
-
 
 ## Improvements and Next Steps
 
