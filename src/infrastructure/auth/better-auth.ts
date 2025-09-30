@@ -17,24 +17,25 @@ export const auth = betterAuth({
         provider: 'postgresql',
         usePlural: false,
     }),
-    advanced: {
-        cookiePrefix: "better-auth",
-        crossSubDomainCookies: {
-            enabled: true,
-        },
-        cookies: {
-            sessionToken: {
-                name: "better-auth.session_token",
-                options: {
-                    httpOnly: true,
-                    sameSite: "none",
-                    secure: true,
-                    path: "/",
-                    maxAge: 60 * 60 * 24 * 7, // 7 days
-                },
-            },
-        },
-    },
+    // advanced: {
+    //     cookiePrefix: "better-auth",
+    //     crossSubDomainCookies: {
+    //         enabled: true,
+    //     },
+    //     cookies: {
+    //         sessionToken: {
+    //             name: "better-auth.session_token",
+    //             options: {
+    //                 httpOnly: true,
+    //                 sameSite: "none",
+    //                 secure: true,
+    //                 path: "/",
+    //                 maxAge: 60 * 60 * 24 * 7, // 7 days
+    //                 domain: undefined,
+    //             },
+    //         },
+    //     },
+    // },
     emailAndPassword: {
         enabled: true,
         autoSignIn: true,
