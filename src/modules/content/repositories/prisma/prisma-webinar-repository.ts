@@ -138,7 +138,7 @@ export class PrismaWebinarRepository implements WebinarRepository {
                 }
             },
             orderBy: {
-                date: 'asc'
+                createdAt: 'desc'
             },
             take: 10
         });
