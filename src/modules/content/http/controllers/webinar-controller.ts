@@ -7,6 +7,7 @@ import { verifyAuthentication } from "@/infrastructure/http/middlewares/verify-a
 import { MakeCreateRegistration } from "../../use-cases/factories/make-create-registration";
 import { HasUserAlreadyRegisteredError, UserRegistrationError } from "@/shared/exceptions/user";
 import { WebinarNotFoundError } from "@/shared/exceptions/webinar";
+import { registerWebinarBodySchema, registerWebinarParamsSchema } from "../schema";
 
 export class WebinarController {
     constructor() { }
@@ -80,6 +81,10 @@ export class WebinarController {
 
     @Route('POST', '/webinars/:webinarId/registrations', {
         middlewares: [verifyAuthentication],
+        schema: {
+            body: registerWebinarBodySchema,
+            params: registerWebinarParamsSchema
+        }
     })
     async createWebinar(request: FastifyRequest, reply: FastifyReply): Promise<void> {
         try {

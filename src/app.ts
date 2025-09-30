@@ -1,10 +1,10 @@
 import fastify from 'fastify'
 import fastifyCors from '@fastify/cors'
-import z, { ZodError } from 'zod'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUi from '@fastify/swagger-ui'
 import betterAuthPlugin from './infrastructure/http/plugins/better-auth-plugin'
 import { registerRoutes } from './infrastructure/http/decorators/route-decorator'
+import { hasZodFastifySchemaValidationErrors, isResponseSerializationError, serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod'
 import { env } from './infrastructure/config/env'
 import { routes } from './modules/content/http/routes'
 
@@ -13,6 +13,9 @@ export const app = fastify({
         enabled: false,
     }
 })
+
+app.setValidatorCompiler(validatorCompiler);
+app.setSerializerCompiler(serializerCompiler);
 
 app.register(betterAuthPlugin)
 
@@ -85,11 +88,31 @@ app.register(fastifySwaggerUi, {
 })
 
 
-app.setErrorHandler((error, _, reply) => {
-    if (error instanceof ZodError) {
-        return reply
-            .status(400)
-            .send({ message: 'Validation error.', issues: z.treeifyError(error) })
+app.setErrorHandler((error, req, reply) => {
+    if (hasZodFastifySchemaValidationErrors(error)) {
+        return reply.code(400).send({
+            error: 'Response Validation Error',
+            message: "Request doesn't match the schema",
+            statusCode: 400,
+            details: {
+                issues: error.validation,
+                method: req.method,
+                url: req.url,
+            },
+        });
+    }
+
+    if (isResponseSerializationError(error)) {
+        return reply.code(500).send({
+            error: 'Internal Server Error',
+            message: "Response doesn't match the schema",
+            statusCode: 500,
+            details: {
+                issues: error.cause.issues,
+                method: error.method,
+                url: error.url,
+            },
+        });
     }
 
     if (env.ENV !== 'prod') {
