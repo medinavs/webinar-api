@@ -22,8 +22,8 @@ export const auth = betterAuth({
                 name: "better-auth.session_token",
                 options: {
                     httpOnly: true,
-                    sameSite: "none",
-                    secure: true,
+                    sameSite: "lax",
+                    secure: false,
                     path: "/",
                     maxAge: 60 * 60 * 24 * 7, // 7 days
                 },
