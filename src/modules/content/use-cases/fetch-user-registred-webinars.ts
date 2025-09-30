@@ -3,6 +3,7 @@ import { WebinarRepository } from "../repositories/webinar-repository";
 
 interface FetchUserRegistredWebinarsRequest {
     userId: string;
+    search?: string;
 }
 
 interface FetchUserRegistredWebinarsResponse {
@@ -15,7 +16,7 @@ export class FetchUserRegistredWebinarsUseCase {
     ) { }
 
     async execute(request: FetchUserRegistredWebinarsRequest): Promise<FetchUserRegistredWebinarsResponse> {
-        const webinars = await this.webinarRepository.getUserRegistrations(request.userId);
+        const webinars = await this.webinarRepository.getUserRegistrations(request.userId, request.search);
 
         return { webinars };
     }

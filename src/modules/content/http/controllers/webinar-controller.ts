@@ -96,9 +96,10 @@ export class WebinarController {
     async getRegisteredWebinars(request: FastifyRequest, reply: FastifyReply): Promise<void> {
         try {
             const { userId } = request.params as { userId: string };
+            const { search } = request.query as { search?: string };
             const useCase = MakeFetchUserRegistredWebinars();
 
-            const { webinars } = await useCase.execute({ userId });
+            const { webinars } = await useCase.execute({ userId, search });
 
             reply.status(200).send({ webinars });
         } catch (error) {

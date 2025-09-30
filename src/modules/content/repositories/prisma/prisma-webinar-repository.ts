@@ -333,9 +333,20 @@ export class PrismaWebinarRepository implements WebinarRepository {
         return registrations.map(registration => registration.user);
     }
 
-    async getUserRegistrations(userId: string): Promise<Webinar[]> {
+    async getUserRegistrations(userId: string, search?: string): Promise<Webinar[]> {
+        const where: any = { userId };
+
+        if (search) {
+            where.webinar = {
+                title: {
+                    contains: search,
+                    mode: 'insensitive'
+                }
+            };
+        }
+
         const registrations = await prisma.webinarRegistration.findMany({
-            where: { userId },
+            where,
             include: {
                 webinar: {
                     include: {

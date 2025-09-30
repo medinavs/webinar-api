@@ -38,7 +38,7 @@ export interface WebinarRepository {
 
     getRegisteredUsers(webinarId: string): Promise<UserRegistred[]>;
 
-    getUserRegistrations(userId: string): Promise<Webinar[]>;
+    getUserRegistrations(userId: string, search?: string): Promise<Webinar[]>;
 
     getRegistrationCount(webinarId: string): Promise<number>;
 }
