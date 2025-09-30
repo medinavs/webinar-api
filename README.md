@@ -91,8 +91,6 @@ npm run start:dev
 └── vite.config.js                 # Vite config for path alias ("@")
 ```
 
-```
-
 ## API Endpoints
 
 The API uses decorator-based routing with controllers for each domain. Main endpoints:
@@ -121,4 +119,3 @@ The API uses decorator-based routing with controllers for each domain. Main endp
 - Implement more detailed roles and permissions for users.
 - Enhanced monitoring and logging for production.
 - Add documentation to endpoints and example payloads.
-```
