@@ -6,7 +6,12 @@ import { env } from "../config/env";
 import { FIVE_MINUTES_IN_SEC, ONE_WEEK_IN_SEC } from "@/shared/constants/time";
 
 export const auth = betterAuth({
-    trustedOrigins: ['http://localhost:8080', 'http://localhost:5173', 'http://localhost:3000', 'https://webinar-front-eosin.vercel.app'],
+    trustedOrigins: [
+        'http://localhost:8080',
+        'http://localhost:5173',
+        'http://localhost:3000',
+        'https://webinar-front-eosin.vercel.app'
+    ],
     plugins: [admin()],
     database: prismaAdapter(prisma, {
         provider: 'postgresql',
@@ -22,8 +27,8 @@ export const auth = betterAuth({
                 name: "better-auth.session_token",
                 options: {
                     httpOnly: true,
-                    sameSite: "lax",
-                    secure: false,
+                    sameSite: "none",
+                    secure: true,
                     path: "/",
                     maxAge: 60 * 60 * 24 * 7, // 7 days
                 },
